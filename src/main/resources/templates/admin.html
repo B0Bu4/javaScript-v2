@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin panel</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-dark bg-dark">
+                <h5 class="text-light" id="navbar-user-principal"></h5>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/login?logout" method="post">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            </br>
+
+
+            <div class="row">
+
+                <div class="col-md-2">
+                    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+
+                        <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-adminPage"
+                           role="tab" aria-controls="v-pills-home" aria-selected="true">Admin</a>
+
+                        <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-userInfo"
+                           role="tab" aria-controls="v-pills-profile" aria-selected="false">User</a>
+                    </div>
+                </div>
+
+                <div class="col-md-10">
+
+                    <div class="tab-content" id="v-pills-tabContent">
+
+
+                        <div class="tab-pane active" id="v-pills-adminPage" role="tabpanel" aria-labelledby="home-tab">
+                            <h3>
+                                Admin panel
+                            </h3>
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#userTable"
+                                       role="tab" aria-controls="home" aria-selected="true">Users table</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#addUser" role="tab"
+                                       aria-controls="profile" aria-selected="false">New user</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content modal-content" id="myTabContent">
+
+                                <div class="tab-pane fade show active" id="userTable" role="tabpanel"
+                                     aria-labelledby="home-tab">
+                                    <div class="col-sm-12">
+                                        <h4>
+                                            All users
+                                        </h4>
+                                        <table class="table table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>id</th>
+                                                <th>email</th>
+                                                <th>role</th>
+                                                <th>edit</th>
+                                                <th>delete</th>
+                                            </tr>
+                                            </thead>
+
+                                            <tbody id="user-list"></tbody>
+
+                                        </table>
+                                        </br>
+                                        </br>
+                                    </div>
+                                </div>
+
+                                <!--                        new user -->
+                                <div class="tab-pane fade" id="addUser" role="tabpanel" aria-labelledby="profile-tab">
+                                    <div class="col-sm-12">
+                                        <h4>
+                                            Add new user
+                                        </h4>
+                                    </div>
+                                    <div align="center">
+                                        <div class="col-sm-3 aria-controls">
+                                            <form id="add-user-form">
+
+                                                <div class="form-outline mb-4">
+                                                    <strong><label class="form-label" for="emailNewUser">Email
+                                                        address</label></strong>
+                                                    <input type="email" id="emailNewUser" name="email"
+                                                           class="form-control">
+                                                </div>
+
+                                                <div class="form-outline mb-4">
+                                                    <strong><label class="form-label" for="passwordNewUser">Password</label></strong>
+                                                    <input type="password" id="passwordNewUser" name="password" class="form-control">
+                                                </div>
+
+                                                <div class="form-outline mb-4">
+                                                    <strong> <label class="form-label">Role</label></strong>
+                                                    </br>
+                                                    <select class="custom-select" size="2"
+                                                            id="rolesNewUser" name="rolesAdd" multiple>
+                                                        <option value="ROLE_ADMIN">ADMIN</option>
+                                                        <option value="ROLE_USER" selected="selected">USER</option>
+                                                    </select>
+                                                </div>
+
+                                                <input class="btn btn-success" type="submit" id="addNewUserButton"
+                                                       value="Add new user">
+
+                                            </form>
+                                            </br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="v-pills-userInfo" role="tabpanel" aria-labelledby="profile-tab">
+                            <h3>
+                                User information-page
+                            </h3>
+                            <br>
+                            <br>
+                            <div class="tab-content modal-content" id="myTabContentUser">
+
+                                <div class="tab-pane fade show active" id="userTableUser" role="tabpanel"
+                                     aria-labelledby="home-tab">
+                                    <div class="col-sm-12">
+                                        <h4>
+                                            About user
+                                        </h4>
+                                        <table class="table table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>id</th>
+                                                <th>email</th>
+                                                <th>role</th>
+                                            </tr>
+                                            </thead>
+
+                                            <tbody id="tbody-user"></tbody>
+
+                                        </table>
+                                        </br>
+                                        </br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="someDefaultModal" tabindex="-1" role="dialog" aria-labelledby="someDefaultModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form class="modal-form">
+
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+            </div>
+
+            <div class="modal-footer">
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="code.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
