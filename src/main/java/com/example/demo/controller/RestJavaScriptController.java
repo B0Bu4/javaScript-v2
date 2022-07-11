@@ -41,16 +41,16 @@ public class RestJavaScriptController {
     }
 
     @PostMapping("/users")
-    public List<User> addNewUser(@RequestBody User user) {
+    public User addNewUser(@RequestBody User user) {
 
         userService.save(user);
-        return userService.findAll();
+        return user;
     }
 
     @PutMapping("/users")
-    public List<User> updateUser(@RequestBody User user) {
+    public User updateUser(@RequestBody User user) {
         userService.saveAndFlush(user);
-        return userService.findAll();
+        return user;
     }
     @DeleteMapping("/users/{id}")
     public void deleteUser(@PathVariable long id){
