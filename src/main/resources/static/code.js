@@ -3,8 +3,8 @@ fetchUsers()
 
 // Панель
 function fetchNav() {
-    const navPrincipal = document.getElementById('navbar-user-principal');
-    const infoUserAdminPage = document.getElementById('tbody-user');
+    let navPrincipal = document.getElementById('navbar-user-principal');
+    let infoUserAdminPage = document.getElementById('tbody-user');
     fetch('http://localhost:8080/api/principal')
         .then(response => response.json())
         .then(userPrincipal => {
@@ -29,7 +29,7 @@ function fetchUsers() {
 }
 
 //Функция отображения таблицы
-const userList = document.getElementById('user-list');
+let userList = document.getElementById('user-list');
 
 function renderUsersTable(users) {
     userList.innerHTML = '';
@@ -53,7 +53,7 @@ function renderUsersTable(users) {
 }
 
 //Добавление юзера (при отправки формы, необходимо переправить на вкладку с таблицей-юзеров, пока не понял как)
-const addUserForm = document.getElementById('add-user-form');
+let addUserForm = document.getElementById('add-user-form');
 addUserForm.addEventListener('submit', function (event) {
 
     event.preventDefault()
@@ -81,12 +81,12 @@ addUserForm.addEventListener('submit', function (event) {
 })
 
 // Edit - Delete
+
 userList.addEventListener('click', function (event) {
+
     let editBtnIsPressed = event.target.id === 'edit-user';
     let delBtnIsPressed = event.target.id === 'delete-user';
     let id = event.target.parentElement.dataset.id;
-    console.log(event.target.parentElement.dataset.id)
-    console.log(event.target.id)
     let modalHeader = document.querySelector('.modal-title');
     modalHeader.innerHTML = '';
     let modalBody = document.querySelector('.modal-body');
@@ -95,48 +95,13 @@ userList.addEventListener('click', function (event) {
     modalFooter.innerHTML = '';
     let modalForm = document.querySelector('.modal-form')
 
+
     if (editBtnIsPressed) {
 
-        fetch(`http://localhost:8080/api/users/${id}`)
-            .then(response => response.json())
-            .then(user => {
-                modalHeader.innerHTML = `Edit user`
-                modalBody.innerHTML = `
-                    <div class="row justify-content-center">
-                        <div class="col-sm-5 aria-controls">
-                            <div class="form-outline mb-4">
-                                <strong><label class="form-label" for="addID">ID</label></strong>
-                                <input class="form-control" type="text" id="addID" value=${user.id} disabled>
-                            </div>
-                            <div class="form-outline mb-4">
-                                <strong><label class="form-label" for="addEmail">Email address</label></strong>
-                                <input class="form-control" type="email" name="addEmail" id="addEmail" value=${user.email}>
-                            </div>
-                            <div class="form-outline mb-4">
-                                <strong><label class="form-label" for="addPassword">Password</label> </strong>
-                                <input class="form-control" name="addPassword" type="password" value="" id="addPassword"
-                                       placeholder="">
-                            </div>
-                            <div class="form-outline mb-4">
-                                <strong><label class="form-label" for="addRole">Role</label></strong>
-                            </br>
-                            <select class="custom-select" size="2" name="addRole" id="addRole" multiple>
-                                <option value="ROLE_ADMIN">ADMIN</option>
-                                <option value="ROLE_USER" selected="selected">USER</option>
-                            </select>
-                             </div>
-                             </br>
-                        </div>
-                    </div>
-                    `
-
-                modalFooter.innerHTML = `
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <input type="submit" class="btn btn-primary" value="EDIT"/>
-                `
-            })
-
         modalForm.addEventListener('submit', function (e) {
+
+            e.preventDefault()
+
             fetch(`http://localhost:8080/api/users/`, {
                 method: 'PUT',
                 headers: {
@@ -154,10 +119,65 @@ userList.addEventListener('click', function (event) {
                 })
             })
                 .then(response => response.json())
-                .then(renderUsersTable)
+                .then(fetchUsers)
+                .then($('#someDefaultModal').modal('hide'))
+
         })
 
+        fetch(`http://localhost:8080/api/users/${id}`)
+            .then(response => response.json())
+            .then(user => {
+                modalHeader.innerHTML = `Edit user`
+                modalBody.innerHTML = `
+                    <div class="row justify-content-center">
+                        <div class="col-sm-5 aria-controls">
+                            <div class="form-outline mb-4">
+                                <strong><label class="form-label" for="addID">ID</label></strong>
+                                <input class="form-control" type="text" id="addID" value=${user.id} disabled>
+                            </div>
+                            <div class="form-outline mb-4">
+                                <strong><label class="form-label" for="addEmail">Email address</label></strong>
+                                <input class="form-control" type="email" id="addEmail" value=${user.email}>
+                            </div>
+                            <div class="form-outline mb-4">
+                                <strong><label class="form-label" for="addPassword">Password</label> </strong>
+                                <input class="form-control" type="password" value="" id="addPassword"
+                                       placeholder="">
+                            </div>
+                            <div class="form-outline mb-4">
+                                <strong><label class="form-label" for="addRole">Role</label></strong>
+                            </br>
+                            <select class="custom-select" size="2" id="addRole" multiple>
+                                <option value="ROLE_ADMIN">ADMIN</option>
+                                <option value="ROLE_USER" selected="selected">USER</option>
+                            </select>
+                             </div>
+                             </br>
+                        </div>
+                    </div>
+                    `
+
+                modalFooter.innerHTML = `
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <input type="submit" class="btn btn-primary" value="EDIT"/>
+                `
+            })
+
+
     } else if (delBtnIsPressed) {
+
+        modalForm.addEventListener('submit', function (e) {
+
+            e.preventDefault()
+
+            fetch(`http://localhost:8080/api/users/${id}`, {
+                method: 'DELETE'
+            })
+                .then(response => response.ok)
+                .then(fetchUsers)
+                .then($('#someDefaultModal').modal('hide'))
+        })
+
         fetch(`http://localhost:8080/api/users/${id}`)
             .then(response => response.json())
             .then(user => {
@@ -190,20 +210,5 @@ userList.addEventListener('click', function (event) {
             <input type="submit" class="btn btn-danger" value="DELETE"/>
             `
             })
-
-        modalForm.addEventListener('submit', function (e) {
-
-            fetch(`http://localhost:8080/api/users/${id}`, {
-                method: 'DELETE'
-            })
-                .then(response => response.ok)
-                .then(fetchUsers)
-
-        })
     }
 })
-
-
-
-
-
