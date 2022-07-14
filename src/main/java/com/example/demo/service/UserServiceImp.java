@@ -103,12 +103,10 @@ public class UserServiceImp implements UserService {
             User user1 = userDao.findUserByEmail("admin");
 
         } catch (NoResultException e) {
-            User admin = new User();
-            admin.setEmail("admin");
+            User admin = new User("Vladimir", "Kozlovskiy", (byte) 31, "admin");
             admin.setPassword(passwordEncoder.encode("admin"));
 
-            User user = new User();
-            user.setEmail("user");
+            User user = new User("Anna", "Kozlovskaya", (byte) 30, "user");
             user.setPassword(passwordEncoder.encode("user"));
 
             Collection<Role> rolesList = new ArrayList<>();

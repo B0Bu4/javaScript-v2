@@ -18,6 +18,10 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String firstname;
+    private String lastname;
+    private byte age;
+
     @Column(name = "email_address", unique = true)
     private String email;
 
@@ -45,7 +49,10 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String email) {
+    public User(String firstname, String lastname, byte age, String email) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.age = age;
         this.email = email;
     }
 
@@ -110,6 +117,30 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public byte getAge() {
+        return age;
+    }
+
+    public void setAge(byte age) {
+        this.age = age;
     }
 
     public String getEmail() {
