@@ -144,8 +144,7 @@ userList.addEventListener('click', function (event) {
             .then(user => {
                 modalHeader.innerHTML = `Edit user`
                 modalBody.innerHTML = `
-                    <div class="row justify-content-center">
-                        <div class="col-sm-5 aria-controls">
+                        <div class="col-sm-7 offset-md-3 text-center">
                             <div class="form-outline mb-4">
                                 <strong><label class="form-label" for="upID">ID</label></strong>
                                 <input class="form-control" type="text" id="upID" value=${user.id} disabled>
@@ -182,7 +181,6 @@ userList.addEventListener('click', function (event) {
                              </div>
                              </br>
                         </div>
-                    </div>
                     `
 
                 modalFooter.innerHTML = `
@@ -211,8 +209,7 @@ userList.addEventListener('click', function (event) {
             .then(user => {
                 modalHeader.innerHTML = `Delete user`
                 modalBody.innerHTML = `
-            <div class="row justify-content-center">
-                <div class="col-sm-5 aria-controls">
+                <div class="col-sm-7 offset-md-3 text-center">
                     <div class="form-outline mb-4">
                         <strong><label class="form-label" for="delId">ID</label></strong>
                         <input class="form-control" type="text" id="delId" value=${user.id} disabled>
@@ -243,7 +240,6 @@ userList.addEventListener('click', function (event) {
                     </div>
                     </br>
                 </div>
-            </div>
             `
                 modalFooter.innerHTML = `
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
